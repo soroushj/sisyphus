@@ -14,7 +14,7 @@ var (
 	errUnrecoverable = errors.New("unrecoverable")
 )
 
-func TestCtxCanceled(t *testing.T) {
+func TestCtxAlreadyDone(t *testing.T) {
 	ctx, cancel := context.WithCancel(context.Background())
 	cancel()
 	err := sisyphus.Do(ctx, func() error { return nil })
@@ -23,7 +23,7 @@ func TestCtxCanceled(t *testing.T) {
 	}
 }
 
-func TestCtxDeadline(t *testing.T) {
+func TestCtxEventuallyDone(t *testing.T) {
 	ctx, cancel := context.WithTimeout(context.Background(), 50*time.Millisecond)
 	defer cancel()
 	s := sisyphus.New(1*time.Millisecond, 30*time.Millisecond)
