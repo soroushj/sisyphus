@@ -92,8 +92,8 @@ func (s *Sisyphus) DoIf(ctx context.Context, f func() error, shouldRetry func(er
 				return err
 			}
 			d *= 2
-			// d < 0 checks for an overflow, but it should never happen in practice.
-			if d > s.max || d < 0 {
+			// d <= 0 checks for an overflow, but it should never happen in practice.
+			if d > s.max || d <= 0 {
 				d = s.max
 			}
 			t.Reset(jitter(d))
